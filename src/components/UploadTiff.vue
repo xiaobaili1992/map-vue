@@ -35,7 +35,7 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import { ElMessage } from 'element-plus';
-import UploadIcon from './assets/image/upload-icon.png';
+import UploadIcon from '../assets/image/upload-icon.png';
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },

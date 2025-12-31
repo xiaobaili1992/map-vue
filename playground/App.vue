@@ -4,6 +4,9 @@
       <button @click="currentView = 'preview'" :class="{ active: currentView === 'preview' }">
         Preview Map
       </button>
+      <button @click="currentView = 'preview3D'" :class="{ active: currentView === 'preview3D' }">
+        Preview 3DMap
+      </button>
       <button @click="currentView = 'station'" :class="{ active: currentView === 'station' }">
         Station Model
       </button>
@@ -15,7 +18,21 @@
           :center="[120.123, 30.123]"
           :zoom="12"
           :kml-url="kmlUrl"
+          :ortho-photo-url="tiffUrl"
+          :show-ortho-photo="true"
+          :flight-route="flyRouteData"
+          :regions="regionsData"
           @map-loaded="onMapLoaded"
+        />
+      </div>
+      <div v-if="currentView === 'preview3D'" class="demo-box">
+        <ThreeDimensionalMap
+          :wall-geo-json="wallData"
+          :area-geo-json="areaData"
+          :texture-map="textureUrl"
+          :center="[120.041663, 31.454729]"
+          :zoom="9"
+          :fly-data="flyData"
         />
       </div>
 
@@ -32,11 +49,17 @@
 
 <script setup>
 import { ref } from 'vue';
-import { PreviewMap, StationModel } from '../src/index.js';
+import { ThreeDimensionalMap, PreviewMap, StationModel } from '../src/index.js';
+import wallData from '../src/data/wuxi.json';
+import areaData from '../src/data/wuxi_xian.json';
+import textureUrl from '../src/assets/image/wuxi-texture.png';
+import { flyData, flyRouteData, regionsData } from '../src/data/config.js';
+
+
 import kmlUrl from '../data/default.kml?url';
 import tiffUrl from '../data/default.tif?url';
 
-const currentView = ref('station');
+const currentView = ref('preview');
 
 const onMapLoaded = (scene) => {
   console.log('Preview Map Loaded', scene);

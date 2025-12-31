@@ -29,10 +29,10 @@
 <script setup>
 import { ref } from 'vue';
 import { ElImageViewer } from 'element-plus';
-import CloseIcon from './assets/image/close-icon.png';
-import PositionIcon from './assets/image/position-icon.png';
-import PreviewIcon from './assets/image/preview-icon.png';
-import ArrowBottomIcon from './assets/image/arrow-bottom-icon.png';
+import CloseIcon from '../assets/image/close-icon.png';
+import PositionIcon from '../assets/image/position-icon.png';
+import PreviewIcon from '../assets/image/preview-icon.png';
+import ArrowBottomIcon from '../assets/image/arrow-bottom-icon.png';
 
 defineProps({
   url1: { type: String, default: '' },

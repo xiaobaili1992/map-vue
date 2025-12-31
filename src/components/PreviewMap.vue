@@ -28,31 +28,31 @@
 </template>
 
 <script setup>
-import { onMounted, ref, onBeforeUnmount, createApp, watch, nextTick } from 'vue';
+import { onMounted, ref, onBeforeUnmount, createApp, watch } from 'vue';
 import { Scene, LineLayer, PointLayer, ImageLayer, Marker } from '@antv/l7';
 import { GaodeMap } from '@antv/l7-maps';
 import { fromArrayBuffer } from 'geotiff';
 import proj4 from 'proj4';
 import gcoord from 'gcoord';
-import { ElIcon, ElLoading } from 'element-plus';
+import { ElIcon } from 'element-plus';
 import { Loading } from '@element-plus/icons-vue';
 import PopupContent from './PopupContent.vue';
 
 // Assets
-import pointIcon from './assets/image/point-icon.png';
-import startIcon from './assets/image/start-icon.png';
-import CurrentPositionIcon from './assets/image/current-position-icon.png';
-import ExpandIcon from './assets/image/expand-icon.png';
-import ShrinkIcon from './assets/image/shrink-icon.png';
-import MouseIcon from './assets/image/mouse-icon.png';
-import MouseWheelIcon from './assets/image/mouse-wheel-icon.png';
+import pointIcon from '../assets/image/point-icon.png';
+import startIcon from '../assets/image/start-icon.png';
+import CurrentPositionIcon from '../assets/image/current-position-icon.png';
+import ExpandIcon from '../assets/image/expand-icon.png';
+import ShrinkIcon from '../assets/image/shrink-icon.png';
+import MouseIcon from '../assets/image/mouse-icon.png';
+import MouseWheelIcon from '../assets/image/mouse-wheel-icon.png';
 
 const props = defineProps({
   center: { type: Array, default: () => [119.436345, 44.458526] },
   zoom: { type: Number, default: 15 },
   mapToken: { type: String, default: '012996f37c22ab7267725dc3a2840f88' },
   mapStyle: { type: String, default: 'amap://styles/dark' },
-  orthoPhotoUrl: { type: String, default: '' },
+  orthoPhotoUrl: { type: String, default: 'https://oss.dee3060.com/minio/default/20251222171936203457-950de464-653c-4531-984f-d5125a3dd7c5-JDWX_TEST.tif' },
   showOrthoPhoto: { type: Boolean, default: false },
   regions: { type: Array, default: () => [] },
   flightRoute: { type: Array, default: () => [] },
@@ -62,7 +62,6 @@ const mapId = `previewMap-${Math.random().toString(36).substr(2, 9)}`;
 
 let scene = null;
 let orthophotoLayer = null;
-let routeLayer = null;
 let areaLayer = null;
 let flyRouteLayer = null;
 let flyRoutePointLayer = null;
@@ -406,9 +405,10 @@ const drawRegions = (regions) => {
   }
   const rings = [];
   regions?.forEach((item) => {
-    if (!Array.isArray(item) || item.length < 3) return;
+    if (!Array.isArray(item)) return;
 
-    const transformed = item.map((p) => gcoord.transform([p[0], p[1]], gcoord.WGS84, gcoord.GCJ02));
+    // const transformed = item.map((p) => gcoord.transform([p[0], p[1]], gcoord.WGS84, gcoord.GCJ02));
+    const transformed = item.map((p) => [p[0], p[1]]);
 
     const first = transformed[0];
     const last = transformed[transformed.length - 1];
@@ -453,7 +453,7 @@ const drawFlyRoute = (routeData) => {
 
   // Transform WGS84 to GCJ02
   const transformedRoute = routeData.map((item) => {
-    const [lng, lat] = gcoord.transform([item.lng, item.lat], gcoord.WGS84, gcoord.GCJ02);
+    const [lng, lat] = gcoord.transform([item.longitude, item.latitude], gcoord.WGS84, gcoord.GCJ02);
     return {
       ...item,
       lng,

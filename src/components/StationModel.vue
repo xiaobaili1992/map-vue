@@ -189,7 +189,7 @@
 import { ref, computed, onMounted, defineProps, defineEmits, watch } from 'vue';
 import StationMap from './StationMap.vue';
 import UploadTiff from './UploadTiff.vue';
-import SubTitle from './components/SubTitle.vue';
+import SubTitle from './SubTitle.vue';
 import {
   CircleCheckFilled,
   WarningFilled,
@@ -199,10 +199,10 @@ import {
   Loading,
 } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
-import EyeShowIcon from './assets/image/eye-show-icon.png';
-import EyeHideIcon from './assets/image/eye-hide-icon.png';
-import ResetIcon from './assets/image/reset-icon.png';
-import DeleteIcon from './assets/image/delete-icon.png';
+import EyeShowIcon from '../assets/image/eye-show-icon.png';
+import EyeHideIcon from '../assets/image/eye-hide-icon.png';
+import ResetIcon from '../assets/image/reset-icon.png';
+import DeleteIcon from '../assets/image/delete-icon.png';
 
 const props = defineProps({
   initialData: {

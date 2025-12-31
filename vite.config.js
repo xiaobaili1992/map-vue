@@ -4,6 +4,11 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   build: {
     minify: true, // 使用默认的 esbuild 压缩，体积最小
     lib: {
